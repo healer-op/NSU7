@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NSUT Student Profile</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #fff;
+    }
+
+    /* === Header === */
+    .header {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .header img {
+      height: 70px;
+      margin-right: 15px;
+    }
+
+    .header-text {
+      text-align: left;
+    }
+
+    .header-text h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .header-text p {
+      margin: 3px 0 0 0;
+      font-size: 13px;
+    }
+
+    /* === Tabs === */
+    .tabs {
+      background: #f9f9f9;
+      padding: 5px 10px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .tabs button {
+      background: #f1f1f1;
+      border: 1px solid #ccc;
+      padding: 6px 14px;
+      margin-right: 3px;
+      font-size: 13px;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+
+    .tabs button:hover {
+      background: #e5e5e5;
+    }
+
+    /* === Profile Container === */
+    .profile-container {
+      width: 95%;
+      margin: 15px auto;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    /* Profile Header (View / Update etc.) */
+    .profile-header {
+      background: #eaeaea;
+      padding: 8px 10px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .profile-header button {
+      background: #f1f1f1;
+      border: 1px solid #bbb;
+      padding: 5px 12px;
+      font-size: 13px;
+      margin-right: 5px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    /* === Profile Content === */
+    .profile-content {
+      display: flex;
+      padding: 15px;
+    }
+
+    .profile-content img {
+      width: 120px;
+      height: 150px;
+      border: 1px solid #ccc;
+      margin-right: 30px;
+      cursor: pointer; /* Show pointer on hover */
+    }
+
+    .profile-info {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      row-gap: 8px;
+      column-gap: 10px;
+      font-size: 14px;
+    }
+
+    .label {
+      font-weight: bold;
+    }
+
+    .value {
+      color: #000;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+
+    /* Show light background when editing */
+    .value[contenteditable="true"]:focus {
+      outline: none;
+      background: #fff5c4;
+      border: 1px dashed #ccc;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <img id="logo" src="ns.png" alt="NSUT Logo">
+    <div class="header-text">
+      <h1 id="universityName">NETAJI SUBHAS UNIVERSITY OF TECHNOLOGY</h1>
+      <p id="address">Azad Hind Fauz Marg, New Delhi - 110078</p>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button id="btnMyProfile">My Profile</button>
+    <button id="btnMyActivities">My Activities</button>
+    <button id="btnRegistrations">Registrations</button>
+    <script>
+        function playSound(){
+            const audioElement = new Audio("atm.mp3");
+            audioElement.play();
+        }
+    </script>
+    <button id="btnLogout" onclick="playSound()">Logout</button>
+  </div>
+
+  <!-- Profile Box -->
+  <div class="profile-container">
+    <!-- Header Buttons -->
+    <div class="profile-header">
+      <button id="btnView">View</button>
+      <button id="btnUpdateProfile">Update Profile</button>
+      <button id="btnUploadSignature">Upload Signature</button>
+      <button id="btnPrintProfile" onclick="window.print()">Print Profile</button>
+    </div>
+
+    <!-- Profile Content -->
+    <div class="profile-content">
+      <!-- Hidden file input -->
+      <input type="file" id="photoUpload" accept="image/*" style="display:none">
+      <img id="studentPhoto" src="BILLA.gif" alt="Student Photo" title="Click to change photo">
+
+      <div class="profile-info">
+        <div class="label">Student ID</div> <div class="value" id="studentId" contenteditable="true">2025UCSE9999</div>
+        <div class="label">Student Name</div> <div class="value" id="studentName" contenteditable="true">SHARABI BILLA</div>
+        <div class="label">DOB</div> <div class="value" id="dob" contenteditable="true">99-11-8888</div>
+        <div class="label">Gender</div> <div class="value" id="gender" contenteditable="true">MALE</div>
+        <div class="label">Category</div> <div class="value" id="category" contenteditable="true">OBC</div>
+        <div class="label">Admission</div> <div class="value" id="admission" contenteditable="true">JEE</div>
+        <div class="label">Branch Name</div> <div class="value" id="branchName" contenteditable="true">COMPUTER SCIENCE AND ENGINEERING (MAIN)</div>
+        <div class="label">Degree</div> <div class="value" id="degree" contenteditable="true">B.Tech (FULL TIME)</div>
+        <div class="label">FT/PT</div> <div class="value" id="ftpt" contenteditable="true">FULL TIME</div>
+        <div class="label">Specialization</div> <div class="value" id="specialization" contenteditable="true">COMPUTER SCIENCE AND ENGINEERING</div>
+        <div class="label">Section</div> <div class="value" id="section" contenteditable="true">1</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const photo = document.getElementById("studentPhoto");
+    const photoUpload = document.getElementById("photoUpload");
+
+    // When user clicks photo -> open file dialog
+    photo.addEventListener("click", () => {
+      photoUpload.click();
+    });
+
+    // When file is selected -> update image
+    photoUpload.addEventListener("change", (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          photo.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+</body>
+</html>
